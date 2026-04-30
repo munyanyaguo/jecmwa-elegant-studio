@@ -542,20 +542,17 @@ export const MIRROR_SIZES = [
   "200 × 100 cm",
 ];
 
+import framesLaminateBoard from "@/assets/frames-board.jpeg";
+
 export const FRAME_FINISHES = [
   {
-    name: "White Oak",
-    note: "A pale, open grain. Reads soft and architectural against neutral walls.",
-    image: framesWhiteOakDetail,
-  },
-  {
-    name: "Mahogany",
-    note: "A warm, deep grain. Holds quiet weight against ivory, stone and sand.",
-    image: framesMahoganyDetail,
+    name: "Laminate Frame Library",
+    note: "A working selection of laminate frame profiles in our studio — warm woods, deep blacks, soft whites, gilded golds and brushed silvers. Each profile is referenced by number; we pair the right finish to the piece, the wall and the room.",
+    image: framesLaminateBoard,
   },
 ];
 
-export const FRAMES_BOARD_IMAGE = framesSamplesBoard;
+export const FRAMES_BOARD_IMAGE = framesLaminateBoard;
 
 export const TESTIMONIALS = [
   {
