@@ -107,32 +107,35 @@ const Services = () => {
           {/* Frame finishes */}
           <div className="mt-16">
             <div className="flex items-baseline justify-between mb-8">
-              <div className="eyebrow">Wooden Frame Finishes</div>
+              <div className="eyebrow">Laminate Frame Finishes</div>
               <div className="hidden md:block text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
                 House selection
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+            <div className="grid grid-cols-1 gap-8 md:gap-10">
               {FRAME_FINISHES.map((f) => (
-                <article key={f.name} className="bg-background border border-hairline">
-                  <div className="aspect-[4/3] overflow-hidden bg-stone">
+                <article key={f.name} className="bg-background border border-hairline grid grid-cols-1 md:grid-cols-12">
+                  <div className="md:col-span-7 aspect-[4/3] md:aspect-auto overflow-hidden bg-stone">
                     <img
                       src={f.image}
-                      alt={`${f.name} wooden frame profile sample`}
+                      alt={`${f.name} — laminate frame profile samples on the studio reference board`}
                       loading="lazy"
                       width={1024}
-                      height={768}
+                      height={1366}
                       className="h-full w-full object-cover"
                     />
                   </div>
-                  <div className="p-7 md:p-8">
+                  <div className="md:col-span-5 p-7 md:p-10 flex flex-col justify-center">
                     <div className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground mb-2">
-                      Wooden frame
+                      Laminate frames
                     </div>
-                    <div className="font-serif text-2xl text-foreground">{f.name}</div>
-                    <p className="mt-3 text-[14px] leading-[1.75] text-muted-foreground">
+                    <div className="font-serif text-2xl md:text-3xl text-foreground">{f.name}</div>
+                    <p className="mt-4 text-[14px] leading-[1.85] text-muted-foreground">
                       {f.note}
+                    </p>
+                    <p className="mt-4 text-[12px] leading-[1.8] text-muted-foreground/80 italic">
+                      White oak and mahogany frames coming soon.
                     </p>
                   </div>
                 </article>
