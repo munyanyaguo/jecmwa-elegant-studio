@@ -19,9 +19,9 @@ const Contact = () => {
             </h2>
 
             <p className="mt-8 max-w-md text-[15px] md:text-base leading-[1.85] text-background/70">
-              We take on a small number of residential projects each season.
-              Share a little about your space and how you live in it, and we
-              will be in touch personally.
+              Reach the studio directly by WhatsApp, phone or email. We
+              respond personally, usually within a working day, and quote
+              after a short conversation about the room you have in mind.
             </p>
 
             <div className="mt-12 space-y-2 text-sm text-background/60">
@@ -33,25 +33,49 @@ const Contact = () => {
           <div className="lg:col-span-6 reveal">
             <div className="border border-background/15">
               {[
-                { icon: MessageCircle, label: "WhatsApp", value: "Message the studio", href: CONTACT.whatsapp },
-                { icon: Phone, label: "Telephone", value: CONTACT.phoneDisplay, href: CONTACT.phone },
-                { icon: Mail, label: "Email", value: CONTACT.emailDisplay, href: CONTACT.email },
-              ].map(({ icon: Icon, label, value, href }) => (
+                {
+                  icon: MessageCircle,
+                  label: "WhatsApp",
+                  value: CONTACT.phoneDisplay,
+                  href: CONTACT.whatsapp,
+                  rel: "noopener noreferrer",
+                  target: "_blank",
+                },
+                {
+                  icon: Phone,
+                  label: "Telephone",
+                  value: CONTACT.phoneDisplay,
+                  href: CONTACT.phone,
+                },
+                {
+                  icon: Mail,
+                  label: "Email",
+                  value: CONTACT.emailDisplay,
+                  href: CONTACT.email,
+                },
+              ].map(({ icon: Icon, label, value, href, rel, target }) => (
                 <a
                   key={label}
                   href={href}
+                  rel={rel}
+                  target={target}
                   className="group flex items-center justify-between gap-6 p-7 md:p-9 border-b border-background/15 last:border-b-0 transition-colors duration-500 hover:bg-background/[0.04]"
                 >
                   <div className="flex items-center gap-6">
-                    <Icon className="h-5 w-5 text-background/60 transition-colors duration-500 group-hover:text-accent" strokeWidth={1.4} />
+                    <Icon
+                      className="h-5 w-5 text-background/60 transition-colors duration-500 group-hover:text-accent"
+                      strokeWidth={1.4}
+                    />
                     <div>
                       <div className="text-[10px] uppercase tracking-[0.28em] text-background/50 mb-1.5">
                         {label}
                       </div>
-                      <div className="font-serif text-xl md:text-2xl text-background">{value}</div>
+                      <div className="font-serif text-xl md:text-2xl text-background break-all md:break-normal">
+                        {value}
+                      </div>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-background/40 transition-all duration-500 group-hover:translate-x-1 group-hover:text-background" />
+                  <ArrowRight className="h-4 w-4 text-background/40 transition-all duration-500 group-hover:translate-x-1 group-hover:text-background shrink-0" />
                 </a>
               ))}
             </div>

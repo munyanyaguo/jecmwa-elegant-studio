@@ -9,8 +9,8 @@ const Footer = () => {
             <div className="font-serif text-2xl tracking-[0.18em] text-foreground">JECMWA</div>
             <div className="mt-1 text-[10px] tracking-[0.4em] text-muted-foreground">LIMITED</div>
             <p className="mt-6 max-w-sm text-sm leading-[1.8] text-muted-foreground">
-              An interior styling studio shaping warm, considered homes through
-              mirrors, portraits, and curated decor.
+              A Nairobi interior styling studio composing mirrors, portraits,
+              art pieces and curated decor — across 49 homes and counting.
             </p>
           </div>
 
@@ -32,7 +32,7 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-foreground/75">
               <li><a href={CONTACT.email} className="hover:text-accent transition-colors">{CONTACT.emailDisplay}</a></li>
               <li><a href={CONTACT.phone} className="hover:text-accent transition-colors">{CONTACT.phoneDisplay}</a></li>
-              <li><a href={CONTACT.whatsapp} className="hover:text-accent transition-colors">WhatsApp the studio</a></li>
+              <li><a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">WhatsApp the studio</a></li>
               <li className="text-muted-foreground">Nairobi, Kenya</li>
             </ul>
           </div>

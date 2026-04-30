@@ -1,4 +1,4 @@
-import { SERVICES } from "@/data/site";
+import { SERVICES, ART_SIZES, MIRROR_SIZES, FRAME_FINISHES } from "@/data/site";
 
 const Services = () => {
   return (
@@ -17,8 +17,8 @@ const Services = () => {
           <div className="lg:col-span-6 lg:col-start-7 reveal">
             <p className="text-[15px] md:text-base leading-[1.85] text-muted-foreground">
               Each engagement is shaped to the home and the people in it.
-              Whether you are styling a single room or composing a residence
-              from the bones up, we move with care, restraint, and a slow
+              Whether you are styling a single room, composing a mirror wall or
+              framing a family of portraits, we move with care, restraint and
               attention to detail.
             </p>
           </div>
@@ -45,6 +45,100 @@ const Services = () => {
               </div>
             </article>
           ))}
+        </div>
+
+        {/* Specifications */}
+        <div className="mt-24 md:mt-32 reveal">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="hairline" />
+            <span className="eyebrow">Standard Specifications</span>
+          </div>
+          <h3 className="font-serif text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.05] text-foreground max-w-2xl">
+            Sizes and finishes, <span className="italic font-light">considered.</span>
+          </h3>
+          <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-muted-foreground">
+            Our portraits, art pieces and mirrors are offered in a measured
+            range of standard sizes, with two house frame finishes. Custom
+            sizes and compositions are quoted on request.
+          </p>
+
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-px bg-hairline border border-hairline">
+            <div className="bg-background p-8 md:p-10">
+              <div className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground mb-3">
+                Art Pieces & Portraits
+              </div>
+              <div className="font-serif text-2xl text-foreground mb-6">Standard sizes</div>
+              <ul className="space-y-2.5">
+                {ART_SIZES.map((s) => (
+                  <li
+                    key={s}
+                    className="flex items-baseline justify-between border-b border-hairline/70 pb-2.5 text-[14px] text-foreground/85"
+                  >
+                    <span className="font-serif text-base">{s}</span>
+                    <span className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
+                      Framed
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-background p-8 md:p-10">
+              <div className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground mb-3">
+                Mirrors
+              </div>
+              <div className="font-serif text-2xl text-foreground mb-6">Standard sizes</div>
+              <ul className="space-y-2.5">
+                {MIRROR_SIZES.map((s) => (
+                  <li
+                    key={s}
+                    className="flex items-baseline justify-between border-b border-hairline/70 pb-2.5 text-[14px] text-foreground/85"
+                  >
+                    <span className="font-serif text-base">{s}</span>
+                    <span className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
+                      Framed
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Frame finishes */}
+          <div className="mt-16">
+            <div className="flex items-baseline justify-between mb-8">
+              <div className="eyebrow">Wooden Frame Finishes</div>
+              <div className="hidden md:block text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
+                House selection
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+              {FRAME_FINISHES.map((f) => (
+                <article key={f.name} className="bg-background border border-hairline">
+                  <div className="aspect-[4/3] overflow-hidden bg-stone">
+                    <img
+                      src={f.image}
+                      alt={`${f.name} wooden frame profile sample`}
+                      loading="lazy"
+                      width={1024}
+                      height={768}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="p-7 md:p-8">
+                    <div className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground mb-2">
+                      Wooden frame
+                    </div>
+                    <div className="font-serif text-2xl text-foreground">{f.name}</div>
+                    <p className="mt-3 text-[14px] leading-[1.75] text-muted-foreground">
+                      {f.note}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

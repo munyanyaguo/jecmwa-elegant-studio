@@ -1,5 +1,5 @@
-import hero from "@/assets/hero.jpg";
 import { ArrowRight } from "lucide-react";
+import { HERO_IMAGE, STATS } from "@/data/site";
 
 const Hero = () => {
   return (
@@ -10,25 +10,25 @@ const Hero = () => {
           <div className="lg:col-span-6 lg:pb-8">
             <div className="flex items-center gap-4 mb-10 animate-fade-up">
               <span className="hairline" />
-              <span className="eyebrow">Interior Design Studio · Est. Nairobi</span>
+              <span className="eyebrow">JECMWA Limited · Nairobi</span>
             </div>
 
             <h1
               className="font-serif text-[2.75rem] sm:text-6xl lg:text-[5.25rem] leading-[0.98] tracking-tightest text-foreground animate-fade-up"
               style={{ animationDelay: "120ms" }}
             >
-              Interiors composed
-              <span className="block italic font-light text-foreground/85">with quiet</span>
-              <span className="block">intention.</span>
+              Mirrors, portraits
+              <span className="block italic font-light text-foreground/85">and curated decor</span>
+              <span className="block">for considered homes.</span>
             </h1>
 
             <p
               className="mt-10 max-w-md text-base md:text-[17px] leading-[1.75] text-muted-foreground animate-fade-up"
               style={{ animationDelay: "240ms" }}
             >
-              JECMWA LIMITED is a residential styling studio working with mirrors,
-              portraits, and curated decor — shaping rooms that feel collected,
-              warm, and unmistakably your own.
+              An interior styling studio working room by room — composing mirror
+              walls, framed portraits, art pieces and decor placements that
+              quietly settle into the rhythm of a home.
             </p>
 
             <div
@@ -39,7 +39,7 @@ const Hero = () => {
                 href="#contact"
                 className="group inline-flex items-center gap-3 bg-foreground px-8 py-4 text-[11px] uppercase tracking-[0.28em] text-background transition-all duration-500 hover:bg-accent"
               >
-                Contact the Studio
+                Begin a Project
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-1" />
               </a>
               <a
@@ -47,7 +47,7 @@ const Hero = () => {
                 className="group inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.28em] text-foreground/80 hover:text-foreground"
               >
                 <span className="border-b border-foreground/40 pb-1 transition-colors group-hover:border-foreground">
-                  View Projects
+                  See the Portfolio
                 </span>
               </a>
             </div>
@@ -56,12 +56,8 @@ const Hero = () => {
               className="mt-16 grid grid-cols-3 max-w-md gap-6 pt-8 border-t border-hairline animate-fade-up"
               style={{ animationDelay: "480ms" }}
             >
-              {[
-                ["12+", "Years styling"],
-                ["80+", "Homes shaped"],
-                ["6", "Studio services"],
-              ].map(([k, v]) => (
-                <div key={k}>
+              {STATS.map(({ k, v }) => (
+                <div key={v}>
                   <div className="font-serif text-3xl text-foreground">{k}</div>
                   <div className="mt-1 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{v}</div>
                 </div>
@@ -73,8 +69,8 @@ const Hero = () => {
           <div className="lg:col-span-6 relative">
             <div className="relative aspect-[4/5] md:aspect-[5/6] overflow-hidden bg-stone animate-image-in">
               <img
-                src={hero}
-                alt="Sunlit luxury living room with arched window, sculptural mirror, linen sofa and oak coffee table"
+                src={HERO_IMAGE}
+                alt="Six panel framed mirror grid styled on a duplex stairway landing beside a botanical art panel"
                 className="h-full w-full object-cover"
                 width={1280}
                 height={1600}
@@ -82,12 +78,12 @@ const Hero = () => {
               />
             </div>
             <div className="absolute -bottom-6 -left-6 hidden md:block">
-              <div className="bg-background border border-hairline px-6 py-4 shadow-soft max-w-[260px]">
-                <div className="eyebrow mb-2">Featured</div>
+              <div className="bg-background border border-hairline px-6 py-4 shadow-soft max-w-[280px]">
+                <div className="eyebrow mb-2">Featured Work</div>
                 <div className="font-serif text-lg leading-snug text-foreground">
-                  The Ashford Residence
+                  Six-panel mirror cluster
                 </div>
-                <div className="mt-1 text-xs text-muted-foreground">Karen, Nairobi · 2025</div>
+                <div className="mt-1 text-xs text-muted-foreground">Duplex stairway · Nairobi</div>
               </div>
             </div>
           </div>

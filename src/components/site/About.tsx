@@ -1,4 +1,4 @@
-import about from "@/assets/about.jpg";
+import { ABOUT_IMAGE } from "@/data/site";
 
 const About = () => {
   return (
@@ -7,8 +7,8 @@ const About = () => {
         <div className="lg:col-span-5 reveal">
           <div className="aspect-[4/5] overflow-hidden bg-stone">
             <img
-              src={about}
-              alt="Styled vignette with ceramic vase, eucalyptus, design books and a brass candleholder"
+              src={ABOUT_IMAGE}
+              alt="Entry foyer styled with a framed abstract painting and a bronze sunflower mirror cluster"
               className="h-full w-full object-cover transition-transform duration-[1400ms] hover:scale-[1.03]"
               loading="lazy"
               width={1024}
@@ -24,34 +24,36 @@ const About = () => {
           </div>
 
           <h2 className="font-serif text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.05] text-foreground">
-            A quiet practice in <span className="italic font-light">considered</span> residential styling.
+            A Nairobi studio for <span className="italic font-light">mirrors, portraits</span> and curated decor.
           </h2>
 
           <div className="mt-10 space-y-6 text-[15px] md:text-base leading-[1.85] text-muted-foreground max-w-xl">
             <p>
-              JECMWA LIMITED is a small interior styling studio working
-              between architecture and decoration — shaping rooms that feel
-              warm, layered, and unmistakably personal.
+              JECMWA LIMITED is an interior styling practice working with
+              homeowners across Nairobi. We compose mirror walls, frame
+              portraits, source art pieces and place decor — room by room,
+              with care.
             </p>
             <p>
-              Our work moves slowly, through detail. A mirror placed to draw
-              the morning light. A portrait wall composed over a long
-              afternoon. A few well-chosen objects allowed the room they
-              deserve. We are interested in homes that age well.
+              Over four years we have shaped 49 homes — corridors, lounges,
+              dining rooms, bedrooms, washrooms, offices and duplex stairways.
+              The work is quiet on purpose. A mirror sized to draw the right
+              light. A portrait wall measured before it is hung. A few
+              chosen objects given the room they deserve.
             </p>
             <p>
-              We work across interior styling, decorative mirrors, portrait
-              curation, and the slow sourcing of decor — for clients who
-              prefer restraint to spectacle, and character to convention.
+              We work with white oak and mahogany frames, in standard sizes
+              from A4 to 200 × 120 cm — and in custom compositions for the
+              walls that ask for them.
             </p>
           </div>
 
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-hairline border-y border-hairline">
             {[
-              ["Mirrors", "Sourced & bespoke"],
-              ["Portraits", "Edit & hang"],
-              ["Decor", "Slow curation"],
-              ["Styling", "Room by room"],
+              ["Mirrors", "Sized & composed"],
+              ["Portraits", "Framed & hung"],
+              ["Art Pieces", "Selected & placed"],
+              ["Decor", "Quietly sourced"],
             ].map(([k, v]) => (
               <div key={k} className="bg-secondary/40 p-5">
                 <div className="font-serif text-xl text-foreground">{k}</div>
