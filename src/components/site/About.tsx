@@ -42,9 +42,9 @@ const About = () => {
               chosen objects given the room they deserve.
             </p>
             <p>
-              We work with white oak and mahogany frames, in standard sizes
-              from A4 to 200 × 120 cm — and in custom compositions for the
-              walls that ask for them.
+              We work with a curated library of laminate frame profiles, in
+              standard sizes from A4 to 200 × 120 cm — and in custom
+              compositions for the walls that ask for them.
             </p>
           </div>
 
