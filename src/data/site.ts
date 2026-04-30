@@ -550,6 +550,16 @@ export const FRAME_FINISHES = [
     note: "A working selection of laminate frame profiles in our studio — warm woods, deep blacks, soft whites, gilded golds and brushed silvers. Each profile is referenced by number; we pair the right finish to the piece, the wall and the room.",
     image: framesLaminateBoard,
   },
+  {
+    name: "Warm Oak Laminate",
+    note: "A warm, light-grained laminate frame profile — soft, natural and quietly Scandinavian. Pairs gently with botanical art, family portraits and bright, daylit rooms.",
+    image: framesWhiteOakDetail,
+  },
+  {
+    name: "Deep Mahogany Laminate",
+    note: "A rich, deep-toned laminate frame profile with the gravity of traditional mahogany. Anchors classical portraits, landscapes and formal lounges, dining rooms and studies.",
+    image: framesMahoganyDetail,
+  },
 ];
 
 export const FRAMES_BOARD_IMAGE = framesLaminateBoard;

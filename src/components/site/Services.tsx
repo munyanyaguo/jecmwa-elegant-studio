@@ -119,7 +119,7 @@ const Services = () => {
                   <div className="md:col-span-7 aspect-[4/3] md:aspect-auto overflow-hidden bg-stone">
                     <img
                       src={f.image}
-                      alt={`${f.name} — laminate frame profile samples on the studio reference board`}
+                      alt={`${f.name} — laminate frame profile`}
                       loading="lazy"
                       width={1024}
                       height={1366}
@@ -133,9 +133,6 @@ const Services = () => {
                     <div className="font-serif text-2xl md:text-3xl text-foreground">{f.name}</div>
                     <p className="mt-4 text-[14px] leading-[1.85] text-muted-foreground">
                       {f.note}
-                    </p>
-                    <p className="mt-4 text-[12px] leading-[1.8] text-muted-foreground/80 italic">
-                      White oak and mahogany frames coming soon.
                     </p>
                   </div>
                 </article>
