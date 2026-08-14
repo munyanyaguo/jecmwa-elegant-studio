@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import type { CollectionConfig } from "./collections";
+
+export type ContentTable = keyof Database["public"]["Tables"];
 
 export type AdminRecord = Record<string, unknown> & { id: string };
 
@@ -9,6 +12,16 @@ export const adminKeys = {
   enquiries: (status: string) => ["admin", "enquiries", status] as const,
   settings: ["admin", "site_settings"] as const,
 };
+
+// The admin edits whichever table its config points at, so payload shapes can't
+// be proven statically. The unsafety is confined to these two helpers.
+function insertRow(table: ContentTable, values: Record<string, unknown>) {
+  return supabase.from(table).insert(values as never);
+}
+
+function updateRow(table: ContentTable, id: string, values: Record<string, unknown>) {
+  return supabase.from(table).update(values as never).eq("id", id);
+}
 
 /** Admin reads bypass the published filter — staff see drafts too. */
 export function useCollection(config: CollectionConfig) {
@@ -32,11 +45,10 @@ export function useSaveRecord(config: CollectionConfig) {
     mutationFn: async (record: Record<string, unknown>) => {
       const { id, ...values } = record;
 
-      const query = id
-        ? supabase.from(config.table).update(values).eq("id", id as string)
-        : supabase.from(config.table).insert(values);
+      const { error } = id
+        ? await updateRow(config.table, id as string, values)
+        : await insertRow(config.table, values);
 
-      const { error } = await query;
       if (error) throw new Error(error.message);
     },
     onSuccess: () => {

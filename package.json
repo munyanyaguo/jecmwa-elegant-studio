@@ -17,7 +17,12 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "db:seed": "node scripts/seed/index.mjs",
-    "db:types": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/integrations/supabase/types.ts"
+    "db:verify": "node scripts/verify.mjs",
+    "db:setup": "bash scripts/setup-db.sh",
+    "db:push": "supabase db push",
+    "db:types": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/integrations/supabase/types.ts",
+    "sql:bundle": "node scripts/sql-bundle.mjs",
+    "fn:deploy": "supabase functions deploy submit-enquiry"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -74,6 +79,7 @@
     "globals": "^15.15.0",
     "jsdom": "^25.0.1",
     "postcss": "^8.5.6",
+    "supabase": "^2.114.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",

@@ -2,6 +2,8 @@
 -- Storage buckets
 --   media            public read  — portfolio, frames, editorial imagery
 --   enquiry-uploads  private      — client room photos attached to an enquiry
+--
+-- Idempotent: buckets upsert, and our policies are dropped before recreation.
 -- ============================================================================
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -10,7 +12,29 @@ values
    array['image/jpeg', 'image/png', 'image/webp', 'image/avif']),
   ('enquiry-uploads', 'enquiry-uploads', false, 10485760,
    array['image/jpeg', 'image/png', 'image/webp', 'image/heic'])
-on conflict (id) do nothing;
+on conflict (id) do update
+  set public = excluded.public,
+      file_size_limit = excluded.file_size_limit,
+      allowed_mime_types = excluded.allowed_mime_types;
+
+do $$
+declare
+  existing text;
+begin
+  for existing in
+    select policyname from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname in (
+        'media is publicly readable', 'staff upload media', 'staff update media',
+        'staff delete media', 'anyone may upload enquiry files',
+        'staff read enquiry files', 'staff delete enquiry files'
+      )
+  loop
+    execute format('drop policy %I on storage.objects', existing);
+  end loop;
+end
+$$;
 
 -- --- media -----------------------------------------------------------------
 create policy "media is publicly readable" on storage.objects

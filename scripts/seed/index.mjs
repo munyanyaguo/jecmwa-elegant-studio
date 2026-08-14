@@ -11,11 +11,11 @@
  * The service-role key bypasses RLS, so this must only ever run locally or in a
  * trusted deploy step — never in the browser bundle.
  */
-import { createClient } from "@supabase/supabase-js";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
+import { ROOT, serviceClient } from "../lib/supabase.mjs";
 import {
   SITE_SETTINGS,
   CONTENT_BLOCKS,
@@ -27,19 +27,10 @@ import {
   PROJECTS,
 } from "./content.mjs";
 
-const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ASSETS = path.resolve(HERE, "../../seed-assets");
+const ASSETS = path.join(ROOT, "seed-assets");
 const BUCKET = "media";
 
-const url = process.env.SUPABASE_URL;
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!url || !key) {
-  console.error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.");
-  process.exit(1);
-}
-
-const db = createClient(url, key, { auth: { persistSession: false } });
+const { url, db } = serviceClient();
 
 const CONTENT_TYPES = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
 

@@ -29,6 +29,9 @@ type EnquiryRecord = {
   created_at: string;
 };
 
+/** The inbox only ever writes these two fields. */
+type EnquiryUpdate = { status?: EnquiryStatus; internal_notes?: string | null };
+
 const STATUSES: EnquiryStatus[] = [
   "new", "contacted", "quoted", "scheduled", "won", "lost", "spam",
 ];
@@ -78,7 +81,7 @@ export const EnquiriesInbox = () => {
   });
 
   const update = useMutation({
-    mutationFn: async ({ id, values }: { id: string; values: Partial<EnquiryRecord> }) => {
+    mutationFn: async ({ id, values }: { id: string; values: EnquiryUpdate }) => {
       const { error } = await supabase.from("enquiries").update(values).eq("id", id);
       if (error) throw new Error(error.message);
     },

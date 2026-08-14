@@ -6,10 +6,13 @@ import { uploadMedia } from "@/lib/admin/api";
 import type { FieldDescriptor } from "@/lib/admin/collections";
 import { cn } from "@/lib/utils";
 
+// Enumerated rather than interpolated so Tailwind can see every class at build time.
 const SPAN: Record<number, string> = {
   3: "md:col-span-3",
   4: "md:col-span-4",
+  5: "md:col-span-5",
   6: "md:col-span-6",
+  8: "md:col-span-8",
   12: "md:col-span-12",
 };
 

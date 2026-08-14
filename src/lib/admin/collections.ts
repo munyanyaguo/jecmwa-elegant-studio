@@ -1,4 +1,7 @@
+import type { Database } from "@/integrations/supabase/types";
 import type { PublishStatus } from "@/lib/content/types";
+
+export type ContentTable = keyof Database["public"]["Tables"];
 
 export type FieldType =
   | "text"
@@ -21,13 +24,13 @@ export type FieldDescriptor = {
   required?: boolean;
   options?: FieldOption[];
   /** Layout width within the 12-column admin form grid. */
-  span?: 3 | 4 | 6 | 12;
+  span?: 3 | 4 | 5 | 6 | 8 | 12;
   placeholder?: string;
 };
 
 export type CollectionConfig = {
   key: string;
-  table: string;
+  table: ContentTable;
   title: string;
   description: string;
   /** Column used as the row heading in the list view. */

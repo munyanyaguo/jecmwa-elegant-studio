@@ -44,12 +44,59 @@ npm run dev             # http://localhost:8080
 
 ## Supabase setup
 
-```bash
-supabase link --project-ref <your-ref>
-supabase db push                       # applies supabase/migrations/*
-supabase functions deploy submit-enquiry
+The schema (tables, enums, helper functions) is in `supabase/migrations/`. All three
+migrations are **idempotent** — safe to run more than once, and safe to run over a
+database whose schema was created by other tooling.
 
-supabase secrets set \
+### 1. Security — do this first
+
+Until the RLS migration is applied, the publishable key can read and write every
+table. Either push the migrations:
+
+```bash
+npx supabase login
+npx supabase link --project-ref sbdixrhkffplizdstlin
+npm run db:push
+```
+
+…or, if you'd rather not link, generate a single file and paste it into the
+Supabase SQL editor:
+
+```bash
+npm run sql:bundle          # writes .logs/apply.sql
+```
+
+Verify afterwards — this should return 15 rows, all with `rowsecurity = true`:
+
+```sql
+select tablename, rowsecurity from pg_tables
+where schemaname = 'public' order by tablename;
+```
+
+### 2. Seed the content
+
+Add the service-role key to `.env` (Supabase → Project Settings → API):
+
+```
+SUPABASE_SERVICE_ROLE_KEY="..."
+```
+
+Then:
+
+```bash
+npm run db:seed
+```
+
+This uploads the 45 images in `seed-assets/` to the `media` bucket and populates
+settings, page copy, 41 projects, services, sizes, frame finishes, testimonials and
+FAQs. Re-running is safe — rows upsert on their natural key.
+
+### 3. Deploy the enquiry function
+
+```bash
+npm run fn:deploy
+
+npx supabase secrets set \
   RESEND_API_KEY=... \
   ENQUIRY_NOTIFY_TO=studio@jecmwa.com \
   ENQUIRY_FROM_EMAIL="JECMWA <studio@jecmwa.com>" \
@@ -57,13 +104,7 @@ supabase secrets set \
   ALLOWED_ORIGINS=https://jecmwa.com
 ```
 
-Then seed the content and imagery (one time, from `seed-assets/`):
-
-```bash
-SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npm run db:seed
-```
-
-Finally, grant yourself admin access:
+### 4. Grant yourself admin access
 
 ```sql
 insert into public.user_roles (user_id, role)

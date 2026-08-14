@@ -2,23 +2,33 @@
 -- Row Level Security
 -- Default posture: anonymous visitors can read published content and create an
 -- enquiry. Nothing else. Staff (a row in user_roles) manage content.
+--
+-- Idempotent: any existing policy on these tables is dropped first, so this can
+-- be re-applied over a database whose schema was created separately.
 -- ============================================================================
 
-alter table public.user_roles          enable row level security;
-alter table public.site_settings       enable row level security;
-alter table public.content_blocks      enable row level security;
-alter table public.projects            enable row level security;
-alter table public.project_images      enable row level security;
-alter table public.services            enable row level security;
-alter table public.frame_finishes      enable row level security;
-alter table public.size_options        enable row level security;
-alter table public.testimonials        enable row level security;
-alter table public.faqs                enable row level security;
-alter table public.enquiries           enable row level security;
-alter table public.enquiry_items       enable row level security;
-alter table public.enquiry_attachments enable row level security;
-alter table public.subscribers         enable row level security;
-alter table public.audit_log           enable row level security;
+do $$
+declare
+  target text;
+  existing text;
+  tables text[] := array[
+    'user_roles', 'site_settings', 'content_blocks', 'projects', 'project_images',
+    'services', 'frame_finishes', 'size_options', 'testimonials', 'faqs',
+    'enquiries', 'enquiry_items', 'enquiry_attachments', 'subscribers', 'audit_log'
+  ];
+begin
+  foreach target in array tables loop
+    execute format('alter table public.%I enable row level security', target);
+
+    for existing in
+      select policyname from pg_policies
+      where schemaname = 'public' and tablename = target
+    loop
+      execute format('drop policy %I on public.%I', existing, target);
+    end loop;
+  end loop;
+end
+$$;
 
 -- ---------------------------------------------------------------------------
 -- Roles: readable by the owner, writable only by admins.
@@ -133,3 +143,24 @@ create policy "staff manage subscribers" on public.subscribers
 -- ---------------------------------------------------------------------------
 create policy "staff read audit log" on public.audit_log
   for select to authenticated using (public.is_staff());
+
+-- ---------------------------------------------------------------------------
+-- Table-level grants. RLS filters rows, but a role still needs the privilege
+-- to reach the table at all — so anon gets read on public content and insert on
+-- the enquiry funnel, and nothing else.
+-- ---------------------------------------------------------------------------
+revoke all on all tables in schema public from anon;
+
+grant usage on schema public to anon, authenticated;
+
+grant select on
+  public.site_settings, public.content_blocks, public.projects, public.project_images,
+  public.services, public.frame_finishes, public.size_options, public.testimonials,
+  public.faqs
+to anon;
+
+grant insert on
+  public.enquiries, public.enquiry_items, public.enquiry_attachments, public.subscribers
+to anon;
+
+grant select, insert, update, delete on all tables in schema public to authenticated;
