@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -15,8 +16,27 @@ export default {
         serif: ['"Cormorant Garamond"', "Georgia", "serif"],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
+      fontSize: {
+        eyebrow: ["0.6875rem", { lineHeight: "1", letterSpacing: "0.32em" }],
+        caption: ["0.8125rem", { lineHeight: "1.7" }],
+        display: ["clamp(2.75rem, 6vw + 0.5rem, 5.25rem)", { lineHeight: "0.98", letterSpacing: "-0.04em" }],
+        h1: ["clamp(2.25rem, 4.5vw + 0.5rem, 3.75rem)", { lineHeight: "1.02" }],
+        h2: ["clamp(1.875rem, 3vw + 0.5rem, 3rem)", { lineHeight: "1.08" }],
+        h3: ["clamp(1.375rem, 1.5vw + 0.75rem, 1.75rem)", { lineHeight: "1.2" }],
+      },
       letterSpacing: {
         tightest: "-0.04em",
+        eyebrow: "0.32em",
+      },
+      transitionTimingFunction: {
+        elegant: "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      transitionDuration: {
+        400: "400ms",
+        600: "600ms",
+        1100: "1100ms",
+        1400: "1400ms",
+        1600: "1600ms",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -84,5 +104,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

@@ -52,6 +52,12 @@
     --shadow-soft: 0 24px 60px -28px hsl(25 22% 18% / 0.18);
     --shadow-card: 0 12px 40px -20px hsl(25 22% 18% / 0.22);
     --transition-elegant: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Motion scale — use these instead of ad-hoc durations */
+    --motion-fast: 300ms;
+    --motion-base: 500ms;
+    --motion-slow: 1100ms;
+    --motion-image: 1400ms;
   }
 
   .dark {
@@ -117,10 +123,24 @@
   .hairline {
     @apply h-px w-12 bg-foreground/40;
   }
+
+  /* Single focus treatment for the whole site. */
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+  /* For controls sitting on the dark (bg-foreground) sections. */
+  .focus-ring-invert {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-foreground;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[100] focus:border focus:border-foreground focus:bg-background focus:px-5 focus:py-3 focus:text-[11px] focus:uppercase focus:tracking-[0.24em] focus:text-foreground;
+  }
+
   .reveal {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 1.1s var(--transition-elegant), transform 1.1s var(--transition-elegant);
+    transition: opacity var(--motion-slow) var(--transition-elegant), transform var(--motion-slow) var(--transition-elegant);
   }
   .reveal.is-visible {
     opacity: 1;
