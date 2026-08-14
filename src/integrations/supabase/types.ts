@@ -6,242 +6,6 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-/**
- * Hand-authored to match `supabase/migrations/*`. Regenerate from the live
- * project once it exists:
- *   npx supabase gen types typescript --project-id <ref> > src/integrations/supabase/types.ts
- */
-
-export type PrimaryCategory = "art" | "mirror" | "decor"
-export type Room =
-  | "terrace" | "lounge" | "corridor" | "washroom" | "bedroom"
-  | "office" | "study" | "stairway" | "kitchen" | "dining" | "foyer"
-export type PublishStatus = "draft" | "published" | "archived"
-export type ImageRole = "hero" | "gallery" | "before" | "after" | "detail"
-export type EnquiryStatus = "new" | "contacted" | "quoted" | "scheduled" | "won" | "lost" | "spam"
-export type AppRole = "admin" | "editor"
-
-/** Generated tables expose Row/Insert/Update; ours share one shape. */
-type Table<Row> = {
-  Row: Row
-  Insert: Partial<Row>
-  Update: Partial<Row>
-  Relationships: []
-}
-
-type Timestamps = { created_at: string; updated_at: string }
-
-export type SiteSettingsRow = {
-  id: boolean
-  legal_name: string
-  display_name: string
-  tagline: string
-  phone_display: string
-  phone_e164: string
-  whatsapp_e164: string
-  email: string
-  hours: string
-  location: string
-  street_address: string | null
-  city: string
-  country: string
-  latitude: number | null
-  longitude: number | null
-  service_areas: string[]
-  socials: Json
-  stats: Json
-  seo_title: string
-  seo_description: string
-  og_image_path: string | null
-  price_disclaimer: string
-  currency: string
-  updated_at: string
-}
-
-export type ContentBlockRow = Timestamps & {
-  id: string
-  key: string
-  eyebrow: string | null
-  heading: string | null
-  heading_emphasis: string | null
-  body: string[]
-  image_path: string | null
-  image_alt: string | null
-  cta_label: string | null
-  cta_href: string | null
-  status: PublishStatus
-}
-
-export type ProjectRow = Timestamps & {
-  id: string
-  slug: string
-  title: string
-  caption: string
-  summary: string | null
-  brief: string | null
-  approach: string | null
-  outcome: string | null
-  category: PrimaryCategory
-  room: Room
-  location: string | null
-  completed_on: string | null
-  dimensions: string | null
-  frame_finish_id: string | null
-  lead_time_days: number | null
-  price_from_kes: number | null
-  featured: boolean
-  sort_order: number
-  status: PublishStatus
-  seo_title: string | null
-  seo_description: string | null
-  published_at: string | null
-}
-
-export type ProjectImageRow = {
-  id: string
-  project_id: string
-  storage_path: string
-  alt: string
-  role: ImageRole
-  width: number | null
-  height: number | null
-  blur_data_url: string | null
-  sort_order: number
-  created_at: string
-}
-
-export type ServiceRow = Timestamps & {
-  id: string
-  slug: string
-  number: string
-  title: string
-  body: string
-  detail: string | null
-  price_from_kes: number | null
-  lead_time_days: number | null
-  sort_order: number
-  status: PublishStatus
-}
-
-export type FrameFinishRow = Timestamps & {
-  id: string
-  slug: string
-  name: string
-  note: string
-  image_path: string | null
-  image_alt: string | null
-  price_multiplier: number
-  sort_order: number
-  status: PublishStatus
-}
-
-export type SizeOptionRow = Timestamps & {
-  id: string
-  category: PrimaryCategory
-  label: string
-  width_cm: number | null
-  height_cm: number | null
-  diameter_cm: number | null
-  base_price_kes: number
-  sort_order: number
-  status: PublishStatus
-}
-
-export type TestimonialRow = Timestamps & {
-  id: string
-  quote: string
-  author_name: string
-  author_label: string
-  project_id: string | null
-  rating: number | null
-  given_on: string | null
-  sort_order: number
-  status: PublishStatus
-}
-
-export type FaqRow = Timestamps & {
-  id: string
-  question: string
-  answer: string
-  sort_order: number
-  status: PublishStatus
-}
-
-export type EnquiryRow = Timestamps & {
-  id: string
-  reference: string
-  name: string
-  email: string
-  phone: string | null
-  whatsapp_opt_in: boolean
-  service_id: string | null
-  category: PrimaryCategory | null
-  rooms: Room[]
-  budget_band: string | null
-  timeline: string | null
-  area: string | null
-  wall_width_cm: number | null
-  wall_height_cm: number | null
-  message: string | null
-  estimated_total_kes: number | null
-  status: EnquiryStatus
-  internal_notes: string | null
-  quoted_amount_kes: number | null
-  source: string | null
-  utm: Json
-  referrer: string | null
-  user_agent: string | null
-}
-
-export type EnquiryItemRow = {
-  id: string
-  enquiry_id: string
-  category: PrimaryCategory
-  size_option_id: string | null
-  frame_finish_id: string | null
-  size_label: string | null
-  frame_label: string | null
-  quantity: number
-  estimated_price_kes: number | null
-  created_at: string
-}
-
-export type EnquiryAttachmentRow = {
-  id: string
-  enquiry_id: string
-  storage_path: string
-  file_name: string | null
-  content_type: string | null
-  byte_size: number | null
-  created_at: string
-}
-
-export type SubscriberRow = {
-  id: string
-  email: string
-  source: string | null
-  confirmed: boolean
-  unsubscribed_at: string | null
-  created_at: string
-}
-
-export type UserRoleRow = {
-  id: string
-  user_id: string
-  role: AppRole
-  created_at: string
-}
-
-export type AuditLogRow = {
-  id: number
-  actor_id: string | null
-  table_name: string
-  record_id: string | null
-  action: string
-  diff: Json
-  created_at: string
-}
-
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
@@ -250,37 +14,790 @@ export type Database = {
   }
   public: {
     Tables: {
-      site_settings: Table<SiteSettingsRow>
-      content_blocks: Table<ContentBlockRow>
-      projects: Table<ProjectRow>
-      project_images: Table<ProjectImageRow>
-      services: Table<ServiceRow>
-      frame_finishes: Table<FrameFinishRow>
-      size_options: Table<SizeOptionRow>
-      testimonials: Table<TestimonialRow>
-      faqs: Table<FaqRow>
-      enquiries: Table<EnquiryRow>
-      enquiry_items: Table<EnquiryItemRow>
-      enquiry_attachments: Table<EnquiryAttachmentRow>
-      subscribers: Table<SubscriberRow>
-      user_roles: Table<UserRoleRow>
-      audit_log: Table<AuditLogRow>
+      audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          diff: Json | null
+          id: number
+          record_id: string | null
+          table_name: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          diff?: Json | null
+          id?: never
+          record_id?: string | null
+          table_name: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          diff?: Json | null
+          id?: never
+          record_id?: string | null
+          table_name?: string
+        }
+        Relationships: []
+      }
+      content_blocks: {
+        Row: {
+          body: string[]
+          created_at: string
+          cta_href: string | null
+          cta_label: string | null
+          eyebrow: string | null
+          heading: string | null
+          heading_emphasis: string | null
+          id: string
+          image_alt: string | null
+          image_path: string | null
+          key: string
+          status: Database["public"]["Enums"]["publish_status"]
+          updated_at: string
+        }
+        Insert: {
+          body?: string[]
+          created_at?: string
+          cta_href?: string | null
+          cta_label?: string | null
+          eyebrow?: string | null
+          heading?: string | null
+          heading_emphasis?: string | null
+          id?: string
+          image_alt?: string | null
+          image_path?: string | null
+          key: string
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Update: {
+          body?: string[]
+          created_at?: string
+          cta_href?: string | null
+          cta_label?: string | null
+          eyebrow?: string | null
+          heading?: string | null
+          heading_emphasis?: string | null
+          id?: string
+          image_alt?: string | null
+          image_path?: string | null
+          key?: string
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enquiries: {
+        Row: {
+          area: string | null
+          budget_band: string | null
+          category: Database["public"]["Enums"]["primary_category"] | null
+          created_at: string
+          email: string
+          estimated_total_kes: number | null
+          id: string
+          internal_notes: string | null
+          message: string | null
+          name: string
+          phone: string | null
+          quoted_amount_kes: number | null
+          reference: string
+          referrer: string | null
+          rooms: Database["public"]["Enums"]["room"][]
+          service_id: string | null
+          source: string | null
+          status: Database["public"]["Enums"]["enquiry_status"]
+          timeline: string | null
+          updated_at: string
+          user_agent: string | null
+          utm: Json
+          wall_height_cm: number | null
+          wall_width_cm: number | null
+          whatsapp_opt_in: boolean
+        }
+        Insert: {
+          area?: string | null
+          budget_band?: string | null
+          category?: Database["public"]["Enums"]["primary_category"] | null
+          created_at?: string
+          email: string
+          estimated_total_kes?: number | null
+          id?: string
+          internal_notes?: string | null
+          message?: string | null
+          name: string
+          phone?: string | null
+          quoted_amount_kes?: number | null
+          reference?: string
+          referrer?: string | null
+          rooms?: Database["public"]["Enums"]["room"][]
+          service_id?: string | null
+          source?: string | null
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          timeline?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          utm?: Json
+          wall_height_cm?: number | null
+          wall_width_cm?: number | null
+          whatsapp_opt_in?: boolean
+        }
+        Update: {
+          area?: string | null
+          budget_band?: string | null
+          category?: Database["public"]["Enums"]["primary_category"] | null
+          created_at?: string
+          email?: string
+          estimated_total_kes?: number | null
+          id?: string
+          internal_notes?: string | null
+          message?: string | null
+          name?: string
+          phone?: string | null
+          quoted_amount_kes?: number | null
+          reference?: string
+          referrer?: string | null
+          rooms?: Database["public"]["Enums"]["room"][]
+          service_id?: string | null
+          source?: string | null
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          timeline?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          utm?: Json
+          wall_height_cm?: number | null
+          wall_width_cm?: number | null
+          whatsapp_opt_in?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiries_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      enquiry_attachments: {
+        Row: {
+          byte_size: number | null
+          content_type: string | null
+          created_at: string
+          enquiry_id: string
+          file_name: string | null
+          id: string
+          storage_path: string
+        }
+        Insert: {
+          byte_size?: number | null
+          content_type?: string | null
+          created_at?: string
+          enquiry_id: string
+          file_name?: string | null
+          id?: string
+          storage_path: string
+        }
+        Update: {
+          byte_size?: number | null
+          content_type?: string | null
+          created_at?: string
+          enquiry_id?: string
+          file_name?: string | null
+          id?: string
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiry_attachments_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      enquiry_items: {
+        Row: {
+          category: Database["public"]["Enums"]["primary_category"]
+          created_at: string
+          enquiry_id: string
+          estimated_price_kes: number | null
+          frame_finish_id: string | null
+          frame_label: string | null
+          id: string
+          quantity: number
+          size_label: string | null
+          size_option_id: string | null
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["primary_category"]
+          created_at?: string
+          enquiry_id: string
+          estimated_price_kes?: number | null
+          frame_finish_id?: string | null
+          frame_label?: string | null
+          id?: string
+          quantity?: number
+          size_label?: string | null
+          size_option_id?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["primary_category"]
+          created_at?: string
+          enquiry_id?: string
+          estimated_price_kes?: number | null
+          frame_finish_id?: string | null
+          frame_label?: string | null
+          id?: string
+          quantity?: number
+          size_label?: string | null
+          size_option_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiry_items_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "enquiries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "enquiry_items_frame_finish_id_fkey"
+            columns: ["frame_finish_id"]
+            isOneToOne: false
+            referencedRelation: "frame_finishes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "enquiry_items_size_option_id_fkey"
+            columns: ["size_option_id"]
+            isOneToOne: false
+            referencedRelation: "size_options"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      faqs: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          question: string
+          sort_order: number
+          status: Database["public"]["Enums"]["publish_status"]
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          question: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          question?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      frame_finishes: {
+        Row: {
+          created_at: string
+          id: string
+          image_alt: string | null
+          image_path: string | null
+          name: string
+          note: string
+          price_multiplier: number
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["publish_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_alt?: string | null
+          image_path?: string | null
+          name: string
+          note?: string
+          price_multiplier?: number
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_alt?: string | null
+          image_path?: string | null
+          name?: string
+          note?: string
+          price_multiplier?: number
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_images: {
+        Row: {
+          alt: string
+          blur_data_url: string | null
+          created_at: string
+          height: number | null
+          id: string
+          project_id: string
+          role: Database["public"]["Enums"]["image_role"]
+          sort_order: number
+          storage_path: string
+          width: number | null
+        }
+        Insert: {
+          alt?: string
+          blur_data_url?: string | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          project_id: string
+          role?: Database["public"]["Enums"]["image_role"]
+          sort_order?: number
+          storage_path: string
+          width?: number | null
+        }
+        Update: {
+          alt?: string
+          blur_data_url?: string | null
+          created_at?: string
+          height?: number | null
+          id?: string
+          project_id?: string
+          role?: Database["public"]["Enums"]["image_role"]
+          sort_order?: number
+          storage_path?: string
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_images_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          approach: string | null
+          brief: string | null
+          caption: string
+          category: Database["public"]["Enums"]["primary_category"]
+          completed_on: string | null
+          created_at: string
+          dimensions: string | null
+          featured: boolean
+          frame_finish_id: string | null
+          id: string
+          lead_time_days: number | null
+          location: string | null
+          outcome: string | null
+          price_from_kes: number | null
+          published_at: string | null
+          room: Database["public"]["Enums"]["room"]
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["publish_status"]
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          approach?: string | null
+          brief?: string | null
+          caption?: string
+          category: Database["public"]["Enums"]["primary_category"]
+          completed_on?: string | null
+          created_at?: string
+          dimensions?: string | null
+          featured?: boolean
+          frame_finish_id?: string | null
+          id?: string
+          lead_time_days?: number | null
+          location?: string | null
+          outcome?: string | null
+          price_from_kes?: number | null
+          published_at?: string | null
+          room: Database["public"]["Enums"]["room"]
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          approach?: string | null
+          brief?: string | null
+          caption?: string
+          category?: Database["public"]["Enums"]["primary_category"]
+          completed_on?: string | null
+          created_at?: string
+          dimensions?: string | null
+          featured?: boolean
+          frame_finish_id?: string | null
+          id?: string
+          lead_time_days?: number | null
+          location?: string | null
+          outcome?: string | null
+          price_from_kes?: number | null
+          published_at?: string | null
+          room?: Database["public"]["Enums"]["room"]
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_frame_finish_fkey"
+            columns: ["frame_finish_id"]
+            isOneToOne: false
+            referencedRelation: "frame_finishes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          body: string
+          created_at: string
+          detail: string | null
+          id: string
+          lead_time_days: number | null
+          number: string
+          price_from_kes: number | null
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["publish_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          lead_time_days?: number | null
+          number?: string
+          price_from_kes?: number | null
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          lead_time_days?: number | null
+          number?: string
+          price_from_kes?: number | null
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          city: string
+          country: string
+          currency: string
+          display_name: string
+          email: string
+          hours: string
+          id: boolean
+          latitude: number | null
+          legal_name: string
+          location: string
+          longitude: number | null
+          og_image_path: string | null
+          phone_display: string
+          phone_e164: string
+          price_disclaimer: string
+          seo_description: string
+          seo_title: string
+          service_areas: string[]
+          socials: Json
+          stats: Json
+          street_address: string | null
+          tagline: string
+          updated_at: string
+          whatsapp_e164: string
+        }
+        Insert: {
+          city?: string
+          country?: string
+          currency?: string
+          display_name?: string
+          email?: string
+          hours?: string
+          id?: boolean
+          latitude?: number | null
+          legal_name?: string
+          location?: string
+          longitude?: number | null
+          og_image_path?: string | null
+          phone_display?: string
+          phone_e164?: string
+          price_disclaimer?: string
+          seo_description?: string
+          seo_title?: string
+          service_areas?: string[]
+          socials?: Json
+          stats?: Json
+          street_address?: string | null
+          tagline?: string
+          updated_at?: string
+          whatsapp_e164?: string
+        }
+        Update: {
+          city?: string
+          country?: string
+          currency?: string
+          display_name?: string
+          email?: string
+          hours?: string
+          id?: boolean
+          latitude?: number | null
+          legal_name?: string
+          location?: string
+          longitude?: number | null
+          og_image_path?: string | null
+          phone_display?: string
+          phone_e164?: string
+          price_disclaimer?: string
+          seo_description?: string
+          seo_title?: string
+          service_areas?: string[]
+          socials?: Json
+          stats?: Json
+          street_address?: string | null
+          tagline?: string
+          updated_at?: string
+          whatsapp_e164?: string
+        }
+        Relationships: []
+      }
+      size_options: {
+        Row: {
+          base_price_kes: number
+          category: Database["public"]["Enums"]["primary_category"]
+          created_at: string
+          diameter_cm: number | null
+          height_cm: number | null
+          id: string
+          label: string
+          sort_order: number
+          status: Database["public"]["Enums"]["publish_status"]
+          updated_at: string
+          width_cm: number | null
+        }
+        Insert: {
+          base_price_kes?: number
+          category: Database["public"]["Enums"]["primary_category"]
+          created_at?: string
+          diameter_cm?: number | null
+          height_cm?: number | null
+          id?: string
+          label: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+          width_cm?: number | null
+        }
+        Update: {
+          base_price_kes?: number
+          category?: Database["public"]["Enums"]["primary_category"]
+          created_at?: string
+          diameter_cm?: number | null
+          height_cm?: number | null
+          id?: string
+          label?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+          width_cm?: number | null
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          confirmed: boolean
+          created_at: string
+          email: string
+          id: string
+          source: string | null
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          confirmed?: boolean
+          created_at?: string
+          email: string
+          id?: string
+          source?: string | null
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          confirmed?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string | null
+          unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          author_label: string
+          author_name: string
+          created_at: string
+          given_on: string | null
+          id: string
+          project_id: string | null
+          quote: string
+          rating: number | null
+          sort_order: number
+          status: Database["public"]["Enums"]["publish_status"]
+          updated_at: string
+        }
+        Insert: {
+          author_label?: string
+          author_name: string
+          created_at?: string
+          given_on?: string | null
+          id?: string
+          project_id?: string | null
+          quote: string
+          rating?: number | null
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Update: {
+          author_label?: string
+          author_name?: string
+          created_at?: string
+          given_on?: string | null
+          id?: string
+          project_id?: string | null
+          quote?: string
+          rating?: number | null
+          sort_order?: number
+          status?: Database["public"]["Enums"]["publish_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "testimonials_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      is_admin: { Args: Record<string, never>; Returns: boolean }
-      is_staff: { Args: Record<string, never>; Returns: boolean }
-      has_role: { Args: { _user_id: string; _role: AppRole }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: never; Returns: boolean }
+      is_staff: { Args: never; Returns: boolean }
+      slugify: { Args: { value: string }; Returns: string }
     }
     Enums: {
-      primary_category: PrimaryCategory
-      room: Room
-      publish_status: PublishStatus
-      image_role: ImageRole
-      enquiry_status: EnquiryStatus
-      app_role: AppRole
+      app_role: "admin" | "editor"
+      enquiry_status:
+        | "new"
+        | "contacted"
+        | "quoted"
+        | "scheduled"
+        | "won"
+        | "lost"
+        | "spam"
+      image_role: "hero" | "gallery" | "before" | "after" | "detail"
+      primary_category: "art" | "mirror" | "decor"
+      publish_status: "draft" | "published" | "archived"
+      room:
+        | "terrace"
+        | "lounge"
+        | "corridor"
+        | "washroom"
+        | "bedroom"
+        | "office"
+        | "study"
+        | "stairway"
+        | "kitchen"
+        | "dining"
+        | "foyer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -407,6 +924,33 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "editor"],
+      enquiry_status: [
+        "new",
+        "contacted",
+        "quoted",
+        "scheduled",
+        "won",
+        "lost",
+        "spam",
+      ],
+      image_role: ["hero", "gallery", "before", "after", "detail"],
+      primary_category: ["art", "mirror", "decor"],
+      publish_status: ["draft", "published", "archived"],
+      room: [
+        "terrace",
+        "lounge",
+        "corridor",
+        "washroom",
+        "bedroom",
+        "office",
+        "study",
+        "stairway",
+        "kitchen",
+        "dining",
+        "foyer",
+      ],
+    },
   },
 } as const
